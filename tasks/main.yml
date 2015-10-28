@@ -13,7 +13,9 @@
     - expires
     - filter
 
-- shell: apache2 -v
+- name: Get installed version of Apache.
+  shell: apache2 -v
+  changed_when: false
   register: apache_version
 
 - name: Change default apache2.4 site
