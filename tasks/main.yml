@@ -1,4 +1,8 @@
 ---
+- name: Ensure packages database is up to date
+  sudo: yes
+  apt: update_cache=yes
+
 - name: Install Apache
   sudo: yes
   apt: pkg=apache2 state=latest
