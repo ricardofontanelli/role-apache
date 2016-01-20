@@ -33,3 +33,13 @@
   template: src=vhost22.conf.tpl dest=/etc/apache2/sites-available/default
   notify: restart apache
   when: apache_version.stdout.find('Apache/2.2.') != -1
+
+- name: disable ServerSignature
+  lineinfile: dest=/etc/apache2/apache2.conf
+              regexp='?ServerSignature On'
+              line='ServerSignature Off'
+
+  - name: disable ServerTokens
+  lineinfile: dest=/etc/apache2/apache2.conf
+              regexp='?ServerTokens OS'
+              line='ServerTokens Prod'
