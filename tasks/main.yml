@@ -10,13 +10,8 @@
 
 - name: Install Apache Modules
   apache2_module: state=present name={{ item }}
-  notify: restart apache
   with_items:
     - rewrite
-    - vhost_alias
-    - headers
-    - expires
-    - filter
 
 - name: Get installed version of Apache.
   shell: apache2 -v
