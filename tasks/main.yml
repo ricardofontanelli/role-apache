@@ -6,21 +6,16 @@
 - name: Install Apache
   sudo: yes
   apt: pkg=apache2 state=latest
+  notify: restart apache
 
-- name: Install Apache Modules rewrite
-  apache2_module: name=rewrite state=present
-
-- name: Install Apache Modules vhost_alias
-  apache2_module: name=vhost_alias state=present
-
-- name: Install Apache Modules headers
-  apache2_module: name=headers state=present
-
-- name: Install Apache Modules expires
-  apache2_module: name=expires state=present
-
-- name: Install Apache Modules filter
-  apache2_module: name=filter state=present
+- name: Install Apache Modules
+  apache2_module: state=present name={{ item }}
+  with_items:
+    - rewrite
+    - vhost_alias
+    - headers
+    - expires
+    - filter
 
 - name: Get installed version of Apache.
   shell: apache2 -v
