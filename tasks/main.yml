@@ -6,6 +6,7 @@
 - name: Install Apache
   sudo: yes
   apt: pkg=apache2 state=latest
+  notify: restart apache
 
 - name: Install Apache Modules
   apache2_module: state=present name={{ item }}
@@ -33,3 +34,17 @@
   template: src=vhost22.conf.tpl dest=/etc/apache2/sites-available/default
   notify: restart apache
   when: apache_version.stdout.find('Apache/2.2.') != -1
+
+- name: Disable Apache ServerSignature
+  lineinfile:
+    dest: "/etc/apache2/apache2.conf"
+    regexp: '^ServerSignature'
+    line: "ServerSignature Off"
+  notify: restart apache
+
+- name: Disable Apache ServerTokens
+  lineinfile:
+    dest: "/etc/apache2/apache2.conf"
+    regexp: '^ServerTokens'
+    line: "ServerTokens Prod"
+  notify: restart apache
