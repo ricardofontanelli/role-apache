@@ -9,12 +9,10 @@
 
 - name: Install Apache Modules rewrite
   apache2_module: name=rewrite state=present
-  notify: restart apache
 
 - name: Install Apache Modules vhost_alias
   apache2_module: name=vhost_alias state=present
-  notify: restart apache
-  
+
 - name: Get installed version of Apache.
   shell: apache2 -v
   changed_when: false
